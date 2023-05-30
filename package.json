@@ -19,9 +19,28 @@
   },
   "keywords": [
     "HTTP Server",
-    "bin"
+    "bin",
+    "cmd"
   ],
   "license": "MIT",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mrtujiawei/bin.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mrtujiawei/package/issues",
+    "email": "tujiawei0512@sina.com"
+  },
+  "author": {
+    "name": "屠佳伟",
+    "email": "tujiawei0512@sina.com",
+    "url": "https://github.com/mrtujiawei"
+  },
+  "homepage": "https://github.com/mrtujiawei/bin#readme",
   "dependencies": {
     "@koa/cors": "3.3.0",
     "@koa/multer": "3.0.2",
