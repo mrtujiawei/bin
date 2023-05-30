@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width,minimum-scale=1,maximum-scale=1,user-scalable=no"
+    />
+    <title>SOCKET</title>
+    <link rel="manifest" href="/manifest.json">
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      #app {
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        overflow: hidden;
+      }
+
+      .messages {
+        height: 100%;
+        overflow: auto;
+      }
+
+      .message {
+        padding: 10px;
+        word-break: break-all;
+      }
+
+      .message-system {
+        background: #ddd;
+      }
+
+      .message-user {
+        background: #fff;
+      }
+
+      .toolbar {
+        display: flex;
+        flex-shrink: 0;
+        height: 40px;
+        background: #008c8c;
+      }
+      .input {
+        display: block;
+        flex-grow: 1;
+        width: 100%;
+        font-size: 20px;
+      }
+      .send-btn {
+        flex-shrink: 0;
+        width: 80px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <ul class="messages"></ul>
+      <div class="toolbar">
+        <input type="text" class="input" />
+        <button class="send-btn">发送</button>
+      </div>
+    </div>
+    <script>
+      const messages = document.querySelector('.messages');
+      const protocol = window.location.protocol == 'https:' ? 'wss' : 'ws';
+
+      const socket = new WebSocket(protocol + '://' + window.location.host);
+      const input = document.querySelector('.input');
+
+      const sendMessage = () => {
+        if (!input.value) {
+          return;
+        }
+        socket.send(input.value);
+        input.value = '';
+      };
+
+      document
+        .querySelector('.send-btn')
+        .addEventListener('click', sendMessage);
+
+      input.addEventListener('keyup', (event) => {
+        if (event.key == 'Enter') {
+          sendMessage();
+        }
+      });
+
+      class Message {
+        type;
+        content;
+        constructor(type, content) {
+          this.type = type;
+          this.content = content;
+        }
+
+        toElement() {
+          const li = document.createElement('li');
+          li.innerHTML = this.content;
+          if (0 == this.type) {
+            li.className = 'message message-system';
+          } else {
+            li.className = 'message message-user';
+          }
+          return li;
+        }
+      }
+
+      const onMessage = (message) => {
+        const element = message.toElement();
+        messages.appendChild(element);
+        const rect = element.getBoundingClientRect();
+        const delta = 30;
+        if (rect.top < messages.clientHeight + delta) {
+          messages.scrollBy({
+            top: element.clientHeight,
+            behavior: 'smooth',
+          });
+        }
+      };
+
+      socket.addEventListener('open', () => {
+        onMessage(new Message(0, '连接成功'));
+      });
+
+      socket.addEventListener('error', (event) => {
+        onMessage(new Message(0, '连接错误'));
+      });
+
+      socket.addEventListener('message', (event) => {
+        onMessage(new Message(1, event.data));
+      });
+
+      socket.addEventListener('close', () => {
+        onMessage(new Message(0, '连接已关闭'));
+      });
+    </script>
+  </body>
+</html>
