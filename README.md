@@ -5,7 +5,7 @@ shell 工具
 ## server
 
 ```
-Usage: server [options]
+Usage: t server [options]
 
 静态文件服务，支持https，请求代理
 
