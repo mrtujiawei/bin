@@ -131,7 +131,7 @@ export default function server(options: Options) {
     logger.info('Default socket page is serving at:');
     ips.forEach((ip) => {
       logger.info(
-        `http${options.https ? 's' : ''}://${ip}:${options.port}/socket.html`
+        `http${options.https ? 's' : ''}://${ip}:${options.port}/socket`
       );
     });
   });
