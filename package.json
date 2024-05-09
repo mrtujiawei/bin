@@ -1,6 +1,6 @@
 {
   "name": "@mrtujiawei/bin",
-  "version": "1.3.21",
+  "version": "1.3.22",
   "description": "我的命令行工具",
   "files": [
     "*"
