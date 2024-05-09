@@ -114,7 +114,7 @@ export default function server(options: Options) {
     client.on('message', (data) => {
       ws.clients.forEach((client) => {
         if (client.readyState == WebSocket.OPEN) {
-          client.send(data.toString());
+          client.send(data);
         }
       });
     });

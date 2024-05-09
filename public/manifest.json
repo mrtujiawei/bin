@@ -5,16 +5,31 @@
   "short_name": "SP",
   "start_url": ".",
   "display": "fullscreen",
+  "theme_color": "#669980",
   "background_color": "#669980",
   "description": "A simply socket test page.",
+  "screenshots": [
+    {
+      "src": "/media/640.png",
+      "sizes": "1280x1280",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Application"
+    },
+    {
+      "src": "/media/1280.png",
+      "sizes": "1280x1280",
+      "type": "image/png"
+    }
+  ],
   "icons": [
     {
-      "src": "media/48.png",
+      "src": "/media/48.png",
       "sizes": "48x48",
       "type": "image/png"
     },
     {
-      "src": "media/144.png",
+      "src": "/media/144.png",
       "sizes": "144x144",
       "type": "image/png"
     }
