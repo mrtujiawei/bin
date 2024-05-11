@@ -9,6 +9,7 @@ import server from './impl/server';
 import download from './m3u8-dowmload';
 import pushAll from './push-all';
 import skipBytes from './skipBytes';
+import runJava from './javaRunner';
 
 const program = new Command();
 
@@ -55,6 +56,14 @@ program
   .requiredOption('-p --position <position>', '起始位置')
   .action((options: { position: string }) => {
     skipBytes(Number(options.position));
+  });
+
+program
+  .command('run-java')
+  .description('运行 java maven 项目中的单个文件')
+  .argument('<filename>', '文件名 *.java')
+  .action((filename: string) => {
+    runJava(filename);
   });
 
 program.parse(process.argv);
