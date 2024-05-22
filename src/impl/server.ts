@@ -10,7 +10,7 @@ import { getIps } from '@mrtujiawei/node-utils';
 import { logger, sendRequest } from '../utils';
 import { Buffer } from 'buffer';
 import { CA_CERT, PRIVATE_KEY } from '../config';
-import { WebSocket, WebSocketServer } from 'ws';
+import { RawData, WebSocket, WebSocketServer } from 'ws';
 
 interface Options {
   https: boolean;
@@ -110,14 +110,21 @@ export default function server(options: Options) {
   }
 
   const ws = new WebSocketServer({ server });
+  const messages: RawData[] = [];
   ws.addListener('connection', (client) => {
     client.on('message', (data) => {
+      messages.push(data);
       ws.clients.forEach((client) => {
         if (client.readyState == WebSocket.OPEN) {
           client.send(data);
         }
       });
     });
+    if (messages.length > 0) {
+      messages.forEach((message) => {
+        client.send(message);
+      });
+    }
   });
 
   server.listen(options.port, () => {
