@@ -10,6 +10,8 @@ import download from './m3u8-dowmload';
 import pushAll from './push-all';
 import skipBytes from './skipBytes';
 import runJava from './javaRunner';
+import base64Encode from './base64Encode';
+import base64Decode from './base64Decode';
 
 const program = new Command();
 
@@ -64,6 +66,22 @@ program
   .argument('<filename>', '文件名 *.java')
   .action((filename: string) => {
     runJava(filename);
+  });
+
+program
+  .command('base64-encode')
+  .description('base64 encode')
+  .argument('<string>', '需要编码的字符串')
+  .action((str) => {
+    console.log(base64Encode(str));
+  });
+
+program
+  .command('base64-decode')
+  .description('base64 decode')
+  .argument('<base64 string>', 'base64编码后的字符串')
+  .action((base64) => {
+    console.log(base64Decode(base64));
   });
 
 program.parse(process.argv);

@@ -2,7 +2,7 @@
 
 import { Command } from 'commander';
 import path from 'path';
-import server from './impl/server';
+import Server from './impl/server';
 
 const program = new Command('server');
 
@@ -21,6 +21,6 @@ program
         options.dir[i] = path.resolve(process.cwd(), options.dir[i]);
       }
     }
-    server(options);
+    Server(options);
   })
   .parse(process.argv);

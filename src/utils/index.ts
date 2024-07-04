@@ -1,39 +1,16 @@
 import http from 'http';
 import https from 'https';
-import { Logger } from '@mrtujiawei/utils';
+import { Logger, M3u8FileUtils, URLUtils } from '@mrtujiawei/utils';
 
 export const logger = Logger.getLogger('@mrtujiawei/bin');
 
-logger.setLevel(Logger.LOG_LEVEL.ALL);
-
-logger.subscribe((content) => {
-  console.log(content.getFormattedMessage());
-});
-
-class InvalidAgrumentsError extends Error {
-  constructor(message = 'Invalid Arguments') {
-    super(message);
-  }
-}
-
-/**
- * @param url - http或https开头的url
- * @returns - 返回http或https开头的域名地址
- */
-export const getDomain = (url: string): string => {
-  checkUrl(url);
-  const match = url.match(/^http[s]?\:\/\/[^/]+/) || [];
-  return match[0] || '';
-};
+logger.setDefaultConfig();
 
 /**
  * 是否是m3u8的注释行
  */
 export const isComment = (line: string) => {
-  if (!line) {
-    return false;
-  }
-  return line.startsWith('#');
+  return M3u8FileUtils.isCommentLine(line);
 };
 
 /**
@@ -42,20 +19,7 @@ export const isComment = (line: string) => {
  * @returns
  */
 export const isCompleteUrl = (url: string): boolean => {
-  if (!url) {
-    return false;
-  }
-  return url.startsWith('http');
-};
-
-/**
- * 判断是否是完整的url, http开头
- * @param {string} url
- */
-const checkUrl = (url: string): void => {
-  if (!isCompleteUrl(url)) {
-    throw new InvalidAgrumentsError();
-  }
+  return URLUtils.hasProtocal(url);
 };
 
 export async function sendRequest(

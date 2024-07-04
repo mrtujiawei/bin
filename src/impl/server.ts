@@ -21,7 +21,7 @@ interface Options {
   rewrite: boolean;
 }
 
-export default function server(options: Options) {
+const Server = (options: Options) => {
   const app = new Koa();
   const router = new Router();
 
@@ -142,4 +142,6 @@ export default function server(options: Options) {
       );
     });
   });
-}
+};
+
+export default Server;

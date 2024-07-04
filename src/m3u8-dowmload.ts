@@ -1,4 +1,4 @@
-import { logger, isComment, getDomain, isCompleteUrl } from './utils';
+import { logger, isComment, isCompleteUrl } from './utils';
 import {
   mkdir,
   rmdir,
@@ -44,7 +44,7 @@ const getDownloader = (domain: string, relativePrefix: string, dir: string) => {
  * 额外的参数只支持 -dir 指定下载目录
  */
 const download = async (m3u8: string, params: { dir?: string }) => {
-  const domain = getDomain(m3u8);
+  const domain = new URL(m3u8).origin;
   const relativePrefix = m3u8.replace(/[^/]*$/, '');
 
   const buffers = await request(m3u8);

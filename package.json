@@ -45,7 +45,7 @@
     "@koa/cors": "3.3.0",
     "@koa/multer": "3.0.2",
     "@mrtujiawei/node-utils": "0.1.12",
-    "@mrtujiawei/utils": "2.5.50",
+    "@mrtujiawei/utils": "2.5.53",
     "base-64": "1.0.0",
     "commander": "9.4.0",
     "koa": "2.11.0",
